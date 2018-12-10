@@ -1,0 +1,301 @@
+<?php
+
+namespace App\Api\v1\Repositories;
+
+use App\User;
+use App\Escort;
+use App\Service;
+use App\Image;
+use App\Video;
+use App\Transaction;
+use App\VIPEscort;
+use App\Review;
+use App\Feature;
+use Illuminate\Http\Request;
+use DB;
+use Illuminate\Support\Facades\Hash;
+use Ramsey\Uuid\Uuid;
+use Carbon\Carbon;
+
+
+class EscortRepository
+{
+
+
+  /**
+ * Create a  new User
+ *
+ * @param object $request
+ *
+ * @return object $user
+ *
+ */
+  public function create($request)
+  {
+
+    // Begin database transaction
+    DB::beginTransaction();
+
+    $escort = Escort::create([
+        'user_id' => $request->user_id,
+        'gender' => $request->gender,
+        'country' => $request->country,
+        'state' => $request->state,
+        'city' => $request->city,
+        'date_of_birth' => $request->date_of_birth,
+        'ethnicity' => $request->ethnicity,
+        'bust_size' => $request->bust_size,
+        'height' => $request->height,
+        'weight' => $request->weight,
+        'build' => $request->build,
+        'looks' => $request->looks,
+        'availability' => $request->availability,
+        'smoker' => $request->smoker,
+        'about' => $request->about,
+        'sex_orientation' => $request->sex_orientation,
+        'language' => $request->language,
+        'views' => $request->views,
+        'incall_1hr' => $request->incall_1hr,
+        'incall_1dy' => $request->incall_1dy,
+        'incall_overnight' => $request->incall_overnight,
+        'incall_1wk' => $request->incall_1wk,
+        'outcall_1hr' => $request->outcall_1hr,
+        'outcall_1dy' => $request->outcall_1dy,
+        'outcall_overnight' => $request->outcall_overnight,
+        'outcall_1wk' => $request->outcall_1wk,
+    ]);
+
+    if (!$escort) {
+
+      // If User isn't created, rollback database to initial state
+      DB::rollback();
+
+      return $escort = "Oops! Sorry there was an error. Please try again";
+
+    }else {
+
+      // If User is created, commit transaction to the database
+      DB::commit();
+
+      return $escort;
+
+    }
+
+  }
+
+  /**
+   * Fetch all records of a tenant
+   *
+   * @param object $request
+   *
+   * @return array $data
+   *
+   */
+    public function escortDetails($escort)
+    {
+        // Fetch the user with email
+        $user = User::where('username', $escort)->first();
+
+        if (!$user) {
+
+            $data = "User does not exist";
+
+        }else {
+
+            // Fetch the cotenant details
+            $escort = Escort::where('user_id', $user->id)->first();
+
+            $views = $escort->views + 1;
+
+            $escort->update(['views' => $views]);
+
+            // Fetch the cotenant's accept details
+            $services = Service::where('escort_id' , $escort->id)->first();
+
+            // Fetch the cotenant's transaction details
+            $images = Image::where('escort_id' , $escort->id)->orWhere('user_id' , $user->id)->first();
+
+            // Fetch the cotenant's transaction details
+            $videos = Video::where('escort_id' , $escort->id)->orWhere('user_id' , $user->id)->first();
+
+            // Fetch the cotenant's visit details
+            $features = Feature::where('escort_id' , $escort->id)->get();
+
+            // Fetch the cotenant's interest details
+            $review = Review::where('escort_id' , $escort->id)->get();
+
+            $transaction = Transaction::where('user_id' , $user->id)->get();
+
+            // $vipEscort = VIPEscort::where('escort_id' , $escort->id)->first();
+
+            $data['user'] = $user;
+            $data['escort'] = $escort;
+            $data['services'] = $services;
+            $data['images'] = $images;
+            $data['videos'] = $videos;
+            $data['features'] = $features;
+            $data['review'] = $review;
+            $data['transaction'] = $transaction;
+            // $data['vipEscort'] = $vipEscort;
+
+        }
+
+        return $data;
+    }
+
+    /**
+     * Fetch all records of a tenant
+     *
+     * @param object $request
+     *
+     * @return array $data
+     *
+     */
+      public function escortDetailsForDashboard($request)
+      {
+          // Fetch the user with email
+          $user = User::where('api_key', $request->header('Authorization'))->first();
+
+          if (!$user) {
+
+              $data = "User does not exist";
+
+          }else {
+
+              // Fetch the cotenant details
+              $escort = Escort::where('user_id', $user->id)->first();
+
+              if (!($escort) == NULL) {
+
+                // Fetch the cotenant's accept details
+                $services = Service::where('escort_id' , $escort->id)->first();
+
+                // Fetch the cotenant's transaction details
+                $images = Image::where('escort_id' , $escort->id)->orWhere('user_id' , $user->id)->first();
+
+                $transaction = Transaction::where('user_id' , $user->id)->get();
+
+                // $vipEscort = VIPEscort::where('escort_id' , $escort->id)->first();
+
+                $data['user'] = $user;
+                $data['escort'] = $escort;
+                $data['services'] = $services;
+                $data['images'] = $images;
+                $data['transaction'] = $transaction;
+
+              }else {
+
+                $data['user'] = $user;
+                $data['escort'] = NULL;
+                $data['services'] = NULL;
+                $data['images'] = NULL;
+                $data['transaction'] = NULL;
+
+              }
+
+          }
+
+          return $data;
+      }
+
+     /**
+     * Fetch all records of a tenant
+     *
+     * @param object $request
+     *
+     * @return array $data
+     *
+     */
+      public function escortDetailsForFeed($escort)
+      {
+
+        $user = User::whereId($escort->user_id)->first(['name' , 'username']);
+
+        $data['user'] = $user;
+        $data['escort'] = $escort;
+
+        return $data;
+      }
+
+      /**
+     * Fetch all records of a tenant
+     *
+     * @param object $request
+     *
+     * @return array $data
+     *
+     */
+      public function escorts()
+      {
+          // Fetch the user with email
+          $escorts = Escort::where('verified' , 1)->get(['id' , 'user_id' , 'vip', 'verified', 'state' , 'city' , 'profile_image']);
+
+          $count = 1;
+
+          foreach ($escorts as $key => $escort) {
+
+              $data[$count] = $this->escortDetailsForFeed($escort);
+              $count++;
+          }
+
+          return $data;
+      }
+
+      /**
+     * Fetch all records of a VIP escort
+     *
+     * @param object $request
+     *
+     * @return array $data
+     *
+     */
+      public function getVIPEscorts()
+      {
+          // Fetch the user with email
+          $escorts = Escort::where('verified' , 1)->where('vip' , 1)->get(['id' , 'user_id' , 'state' , 'city' , 'profile_image', 'verified']);
+
+          $count = 1;
+
+          foreach ($escorts as $key => $escort) {
+
+              $data[$count] = $this->escortDetailsForFeed($escort);
+              $count++;
+
+          }
+
+          return $data;
+      }
+
+      /**
+     * Update a Tenant
+     *
+     * @param int $id
+     * @param object $request
+     *
+     * @return object $tenant
+     *
+     */
+    public function updateEscort($request)
+    {
+
+        // Fetch tenant with $id from database
+        $user = User::where('api_key' , $request->header('Authorization'))->first();
+
+        if ($user) {
+
+            $escort = Escort::where('user_id' , $user->id)->first();
+
+            // Update tenant details
+            $escort->update($request->all());
+
+            return $escort;
+
+        }elseif (!$user) {
+
+          return  $escort = "User details not found";
+
+        }
+
+    }
+
+}

@@ -18,7 +18,7 @@ class Escort extends Model implements AuthenticatableContract, AuthorizableContr
      * @var array
      */
     protected $fillable = [
-      'user_id', 'gender', 'country', 'state', 'city', 'date_of_birth', 'ethnicity', 'bust_size', 'height', 'weight', 'build', 'looks', 'availability', 'smoker',
+      'user_id', 'gender', 'country', 'state', 'city', 'year_of_birth', 'ethnicity', 'bust_size', 'height', 'weight', 'build', 'looks', 'availability', 'smoker',
       'about', 'sex_orientation', 'language', 'verified', 'vip', 'views', 'incall_1hr', 'incall_1dy', 'incall_overnight', 'incall_1wk', 'outcall_1hr', 'outcall_1dy', 'outcall_overnight', 'outcall_1wk',
     ];
 

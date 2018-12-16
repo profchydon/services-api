@@ -58,6 +58,33 @@ class ImageController extends Controller
     }
 
     /**
+   * Create a  new User
+   *
+   * @param object $request
+   *
+   * @return JSON
+   *
+   */
+  public function update (Request $request)
+  {
+
+      // Call the create method of UserRepository
+      $image = $this->image->update($request);
+
+      // Create a custom array as response
+      $response = [
+          "status" => "success",
+          "code" => 201,
+          "message" => "Images updated successfully",
+          "data" => $image
+      ];
+
+      // return the custom in JSON format
+      return response()->json($response);
+
+  }
+
+    /**
      * Fetch all existing Properties
      *
      * @return JSON

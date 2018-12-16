@@ -27,6 +27,8 @@ class CreateImagesTable extends Migration
           $table->string('image_8')->nullable();
           $table->string('image_9')->nullable();
           $table->string('image_10')->nullable();
+          $table->string('image_11')->nullable();
+          $table->string('image_12')->nullable();
           $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
           $table->foreign('escort_id')->references('id')->on('escorts')->onDelete('cascade');
           $table->timestamps();

@@ -86,4 +86,34 @@ class VideoRepository
 
     }
 
+
+    /**
+   * Update a Tenant
+   *
+   * @param int $id
+   * @param object $request
+   *
+   * @return object $tenant
+   *
+   */
+  public function update($request)
+  {
+
+      // Fetch tenant with $id from database
+      $escortVideo = Video::where('escort_id' , $request->escort_id)->first();
+
+      if ($escortVideo) {
+
+          // Update tenant details
+          $escortVideo->update($request->all());
+
+          return $escortVideo;
+
+      }elseif (!$escortVideo) {
+
+        return  $escortVideo = "User details not found";
+
+      }
+
+  }
 }

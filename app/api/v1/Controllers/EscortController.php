@@ -33,7 +33,7 @@ class EscortController extends Controller
         // Inject UserRepository Class into UserController
         $this->user = $user;
         $this->escort = $escort;
-        $this->middleware('auth', ['except' => ['escorts' , 'escortDetails', 'getEscortsForHomepage', 'getVIPEscorts' , 'escortDetailsForDashboard']]);
+        $this->middleware('auth', ['except' => ['create', 'escorts' , 'escortDetails', 'getEscortsForHomepage', 'getVIPEscorts' , 'escortDetailsForDashboard']]);
 
     }
 

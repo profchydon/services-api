@@ -36,50 +36,62 @@ class EscortRepository
     // Begin database transaction
     DB::beginTransaction();
 
-    $escort = Escort::create([
-        'user_id' => $request->user_id,
-        'gender' => $request->gender,
-        'country' => $request->country,
-        'state' => $request->state,
-        'city' => $request->city,
-        'date_of_birth' => $request->date_of_birth,
-        'ethnicity' => $request->ethnicity,
-        'bust_size' => $request->bust_size,
-        'height' => $request->height,
-        'weight' => $request->weight,
-        'build' => $request->build,
-        'looks' => $request->looks,
-        'availability' => $request->availability,
-        'smoker' => $request->smoker,
-        'about' => $request->about,
-        'sex_orientation' => $request->sex_orientation,
-        'language' => $request->language,
-        'views' => $request->views,
-        'incall_1hr' => $request->incall_1hr,
-        'incall_1dy' => $request->incall_1dy,
-        'incall_overnight' => $request->incall_overnight,
-        'incall_1wk' => $request->incall_1wk,
-        'outcall_1hr' => $request->outcall_1hr,
-        'outcall_1dy' => $request->outcall_1dy,
-        'outcall_overnight' => $request->outcall_overnight,
-        'outcall_1wk' => $request->outcall_1wk,
-    ]);
+    $checKEscortExist = Escort::where('user_id' , $request->user_id)->get();
 
-    if (!$escort) {
+    if (count($checKEscortExist) === 0) {
 
-      // If User isn't created, rollback database to initial state
-      DB::rollback();
+        $escort = Escort::create([
+            'user_id' => $request->user_id,
+            'gender' => $request->gender,
+            'country' => $request->country,
+            'state' => $request->state,
+            'city' => $request->city,
+            'year_of_birth' => $request->year_of_birth,
+            'ethnicity' => $request->ethnicity,
+            'bust_size' => $request->bust_size,
+            'height' => $request->height,
+            'weight' => $request->weight,
+            'build' => $request->build,
+            'looks' => $request->looks,
+            'availability' => $request->availability,
+            'smoker' => $request->smoker,
+            'about' => $request->about,
+            'sex_orientation' => $request->sex_orientation,
+            'language' => $request->language,
+            'views' => $request->views,
+            'incall_1hr' => $request->incall_1hr,
+            'incall_1dy' => $request->incall_1dy,
+            'incall_overnight' => $request->incall_overnight,
+            'incall_1wk' => $request->incall_1wk,
+            'outcall_1hr' => $request->outcall_1hr,
+            'outcall_1dy' => $request->outcall_1dy,
+            'outcall_overnight' => $request->outcall_overnight,
+            'outcall_1wk' => $request->outcall_1wk,
+        ]);
 
-      return $escort = "Oops! Sorry there was an error. Please try again";
+        if (!$escort) {
+
+          // If User isn't created, rollback database to initial state
+          DB::rollback();
+
+          return $escort = "Oops! Sorry there was an error. Please try again";
+
+        }else {
+
+          // If User is created, commit transaction to the database
+          DB::commit();
+
+          return $escort;
+
+        }
+
 
     }else {
 
-      // If User is created, commit transaction to the database
-      DB::commit();
-
-      return $escort;
 
     }
+
+
 
   }
 
@@ -175,12 +187,14 @@ class EscortRepository
 
                 $transaction = Transaction::where('user_id' , $user->id)->get();
 
-                // $vipEscort = VIPEscort::where('escort_id' , $escort->id)->first();
+                // Fetch the cotenant's transaction details
+                $videos = Video::where('escort_id' , $escort->id)->orWhere('user_id' , $user->id)->first();
 
                 $data['user'] = $user;
                 $data['escort'] = $escort;
                 $data['services'] = $services;
                 $data['images'] = $images;
+                $data['videos'] = $videos;
                 $data['transaction'] = $transaction;
 
               }else {

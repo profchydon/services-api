@@ -21,7 +21,7 @@ class CreateEscortsTable extends Migration
         $table->string('country')->nullable();
         $table->string('state')->nullable();
         $table->string('city')->nullable();
-        $table->string('date_of_birth')->nullable();
+        $table->string('year_of_birth')->nullable();
         $table->string('ethnicity')->nullable();
         $table->string('bust_size')->nullable();
         $table->string('height')->nullable();

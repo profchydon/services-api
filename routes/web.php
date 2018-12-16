@@ -101,10 +101,12 @@ Route::group(['prefix' => 'api/v1'], function () {
     // Verifications route
     Route::group(['prefix' => 'images'], function () {
         Route::post('create' , 'ImageController@create');
+        Route::post('update' , 'ImageController@update');
     });
 
     // Verifications route
     Route::group(['prefix' => 'videos'], function () {
         Route::post('create' , 'VideoController@create');
+        Route::post('update' , 'VideoController@update');
     });
 });

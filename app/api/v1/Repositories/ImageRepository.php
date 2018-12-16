@@ -67,6 +67,36 @@ class ImageRepository
 
     }
 
+    /**
+   * Update a Tenant
+   *
+   * @param int $id
+   * @param object $request
+   *
+   * @return object $tenant
+   *
+   */
+  public function update($request)
+  {
+
+      // Fetch tenant with $id from database
+      $escortImage = Image::where('escort_id' , $request->escort_id)->first();
+
+      if ($escortImage) {
+
+          // Update tenant details
+          $escortImage->update($request->all());
+
+          return $escortImage;
+
+      }elseif (!$escortImage) {
+
+        return  $escortImage = "User details not found";
+
+      }
+
+  }
+
 
     /**
      * Create all Properties existing in the database

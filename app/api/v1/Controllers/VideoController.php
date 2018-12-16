@@ -80,5 +80,32 @@ class VideoController extends Controller
 
     }
 
+    /**
+   * Create a  new User
+   *
+   * @param object $request
+   *
+   * @return JSON
+   *
+   */
+  public function update (Request $request)
+  {
+
+      // Call the create method of UserRepository
+      $video = $this->video->update($request);
+
+      // Create a custom array as response
+      $response = [
+          "status" => "success",
+          "code" => 201,
+          "message" => "Video updated successfully",
+          "data" => $video
+      ];
+
+      // return the custom in JSON format
+      return response()->json($response);
+
+  }
+
 
 }

@@ -8,7 +8,6 @@ use App\Service;
 use App\Image;
 use App\Video;
 use App\Transaction;
-use App\VIPEscort;
 use App\Review;
 use App\Feature;
 use Illuminate\Http\Request;
@@ -138,8 +137,6 @@ class EscortRepository
 
             $transaction = Transaction::where('user_id' , $user->id)->get();
 
-            // $vipEscort = VIPEscort::where('escort_id' , $escort->id)->first();
-
             $data['user'] = $user;
             $data['escort'] = $escort;
             $data['services'] = $services;
@@ -148,7 +145,6 @@ class EscortRepository
             $data['features'] = $features;
             $data['review'] = $review;
             $data['transaction'] = $transaction;
-            // $data['vipEscort'] = $vipEscort;
 
         }
 
@@ -242,17 +238,27 @@ class EscortRepository
       public function escorts()
       {
           // Fetch the user with email
-          $escorts = Escort::where('verified' , 1)->get(['id' , 'user_id' , 'vip', 'verified', 'state' , 'city' , 'profile_image']);
+          $escorts = Escort::where('verified' , 1)->get(['id' , 'user_id' , 'rank', 'verified', 'state' , 'city' , 'profile_image']);
 
           $count = 1;
 
-          foreach ($escorts as $key => $escort) {
+          if (count($escorts) === 0) {
 
-              $data[$count] = $this->escortDetailsForFeed($escort);
-              $count++;
+              return $data = "No escort available right now";
+
+          }else {
+
+              foreach ($escorts as $key => $escort) {
+
+                  $data[$count] = $this->escortDetailsForFeed($escort);
+                  $count++;
+              }
+
+              return $data;
+
           }
 
-          return $data;
+
       }
 
       /**
@@ -263,21 +269,30 @@ class EscortRepository
      * @return array $data
      *
      */
-      public function getVIPEscorts()
+      public function getPlatinumEscorts()
       {
           // Fetch the user with email
-          $escorts = Escort::where('verified' , 1)->where('vip' , 1)->get(['id' , 'user_id' , 'state' , 'city' , 'profile_image', 'verified']);
+          $escorts = Escort::where('verified' , 1)->where('rank' , 'platinum')->get(['id' , 'user_id' , 'state' , 'city' , 'profile_image', 'verified']);
 
           $count = 1;
 
-          foreach ($escorts as $key => $escort) {
+          if (count($escorts) === 0) {
 
-              $data[$count] = $this->escortDetailsForFeed($escort);
-              $count++;
+              return $data = "No platinum escort available right now";
+
+          }else {
+
+            foreach ($escorts as $key => $escort) {
+
+                $data[$count] = $this->escortDetailsForFeed($escort);
+                $count++;
+
+            }
+
+            return $data;
 
           }
 
-          return $data;
       }
 
       /**

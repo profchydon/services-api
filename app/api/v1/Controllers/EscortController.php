@@ -33,7 +33,7 @@ class EscortController extends Controller
         // Inject UserRepository Class into UserController
         $this->user = $user;
         $this->escort = $escort;
-        $this->middleware('auth', ['except' => ['create', 'escorts' , 'escortDetails', 'getEscortsForHomepage', 'getVIPEscorts' , 'escortDetailsForDashboard']]);
+        $this->middleware('auth', ['except' => ['create', 'escorts' , 'escortDetails', 'getEscortsForHomepage', 'getPlatinumEscorts' , 'escortDetailsForDashboard']]);
 
     }
 
@@ -95,10 +95,10 @@ class EscortController extends Controller
     public function getEscortsForHomepage()
     {
         $escorts = $this->escort->escorts();
-        $vipEscorts = $this->escort->getVIPEscorts();
+        $platinumEscorts = $this->escort->getPlatinumEscorts();
 
         $data['escorts'] = $escorts;
-        $data['vipEscorts'] = $vipEscorts;
+        $data['platinumEscorts'] = $platinumEscorts;
 
         // Create a custom array as response
         $response = [
@@ -114,18 +114,18 @@ class EscortController extends Controller
     }
 
 
-    public function getVIPEscorts()
+    public function getPlatinumEscorts()
     {
 
       // Call the create method of UserRepository
-      $vipEscorts = $this->escort->getVIPEscorts();
+      $platinumEscorts = $this->escort->getPlatinumEscorts();
 
       // Create a custom array as response
       $response = [
           "status" => "success",
           "code" => 200,
           "message" => "Ok",
-          "data" => $vipEscorts
+          "data" => $platinumEscorts
       ];
 
       // return the custom in JSON format

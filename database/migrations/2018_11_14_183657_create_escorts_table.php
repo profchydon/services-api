@@ -34,7 +34,7 @@ class CreateEscortsTable extends Migration
         $table->string('sex_orientation')->nullable();
         $table->string('language')->nullable();
         $table->integer('verified')->default(0)->nullable();
-        $table->string('vip')->default(0)->nullable();
+        $table->enum('rank' , ['regular', 'silver', 'gold', 'platinum'])->default('regular')->nullable();
         $table->string('views')->nullable();
         $table->string('incall_1hr')->nullable();
         $table->string('incall_1dy')->nullable();

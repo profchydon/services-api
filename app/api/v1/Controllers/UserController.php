@@ -228,13 +228,33 @@ class UserController extends Controller
               "data" => NULL
           ];
 
+      }elseif ($user == "Email address already exist") {
+
+          // Create a custom array as response
+          $response = [
+              "status" => "failed",
+              "code" => 404,
+              "message" => $user,
+              "data" => NULL
+          ];
+
+      }elseif ($user == "Phone number already exist") {
+
+          // Create a custom array as response
+          $response = [
+              "status" => "failed",
+              "code" => 404,
+              "message" => $user,
+              "data" => NULL
+          ];
+
       }else {
 
         // Create a custom array as response
         $response = [
             "status" => "success",
-            "code" => 201,
-            "message" => "User created successfully",
+            "code" => 200,
+            "message" => "User updated successfully",
             "data" => $user
         ];
 

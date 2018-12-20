@@ -272,7 +272,7 @@ class EscortRepository
       public function getPlatinumEscorts()
       {
           // Fetch the user with email
-          $escorts = Escort::where('verified' , 1)->where('rank' , 'platinum')->get(['id' , 'user_id' , 'state' , 'city' , 'profile_image', 'verified']);
+          $escorts = Escort::where('verified' , 1)->where('rank' , 'platinum')->get(['id' , 'user_id' , 'rank', 'state' , 'city' , 'profile_image', 'verified']);
 
           $count = 1;
 

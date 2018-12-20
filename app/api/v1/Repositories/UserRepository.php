@@ -98,6 +98,28 @@ class UserRepository
 
   }
 
+  public function emailExist($email)
+  {
+      $emailExist = User::whereEmail($email)->first();
+
+      if (count($emailExist) == 0) {
+          return false;
+      }elseif (count($emailExist) != 0) {
+          return true;
+      }
+  }
+
+  public function phoneNumberExist($phone)
+  {
+      $phoneNumberExist = User::where('phone' , $phone)->first();
+
+      if (count($phoneNumberExist) == 0) {
+          return false;
+      }elseif (count($phoneNumberExist) != 0) {
+          return true;
+      }
+  }
+
   /**
      * Fetch a User using email
      *
@@ -188,6 +210,7 @@ class UserRepository
     public function updateUser ($request)
     {
 
+
         try {
 
             // Fetch User with email and api_key from database
@@ -195,8 +218,23 @@ class UserRepository
 
             if ($user) {
 
-                // Update user details
-                $user->update($request->all());
+                $emailExist = $this->emailExist($request->email);
+                $phoneNumberExist = $this->phoneNumberExist($request->phone);
+
+                if ($emailExist && ($user->api_key != $request->header('Authorization')) ) {
+
+                    $user = "Email address already exist";
+
+                }elseif ($phoneNumberExist && ($user->api_key != $request->header('Authorization')) ) {
+
+                    $user = "Phone number already exist";
+
+                }else {
+
+                  // Update user details
+                  $user->update($request->all());
+
+                }
 
                 return $user;
 

@@ -98,28 +98,6 @@ class UserRepository
 
   }
 
-  public function emailExist($email)
-  {
-      $emailExist = User::whereEmail($email)->first();
-
-      if (count($emailExist) == 0) {
-          return false;
-      }elseif (count($emailExist) != 0) {
-          return true;
-      }
-  }
-
-  public function phoneNumberExist($phone)
-  {
-      $phoneNumberExist = User::where('phone' , $phone)->first();
-
-      if (count($phoneNumberExist) == 0) {
-          return false;
-      }elseif (count($phoneNumberExist) != 0) {
-          return true;
-      }
-  }
-
   /**
      * Fetch a User using email
      *
@@ -210,64 +188,15 @@ class UserRepository
     public function updateUser ($request)
     {
 
-
         try {
 
             // Fetch User with email and api_key from database
             $user = User::where('api_key' , $request->header('Authorization'))->first();
 
-            // Check for resource count
-            if (count($user) !== 0) {
+            if ($user !== NULL) {
 
-                // If email was sent as an input data
-                if (isset($request->email)) {
-
-                    // Check if email exist
-                    $emailExist = User::whereEmail($request->email)->first();
-
-                    // If email exist
-                    if (count($emailExist) !== 0) {
-
-                      // Check if api for user with email corresponds to Authorization key to determine if its same user
-                      if ($emailExist->api_key === $request->header('Authorization') ) {
-                          $userIntegrity = true;
-                      }else {
-                          $userIntegrity = false;
-                      }
-
-                    }
-
-                }
-                if (isset($request->phone)) {
-
-                    $phoneNumberExist = User::where('phone' , $request->phone)->first();
-
-                    if (count($phoneNumberExist) !== 0) {
-
-                      if ($phoneNumberExist->api_key === $request->header('Authorization') ) {
-                          $userIntegrity = true;
-                      }else {
-                          $userIntegrity = false;
-                      }
-
-                    }
-
-                }
-
-                if ( (count($emailExist) !== 0) && (!($userIntegrity)) ) {
-
-                    $user = "Email address already exist";
-
-                }elseif ( (count($phoneNumberExist) !== 0) && (!($userIntegrity)) ) {
-
-                    $user = "Phone number already exist";
-
-                }elseif ($userIntegrity) {
-
-                    // Update user details
-                    $user->update($request->all());
-
-                }
+                // Update user details
+                $user->update($request->all());
 
                 return $user;
 

@@ -216,23 +216,56 @@ class UserRepository
             // Fetch User with email and api_key from database
             $user = User::where('api_key' , $request->header('Authorization'))->first();
 
-            if ($user) {
+            // Check for resource count
+            if (count($user) !== 0) {
 
-                $emailExist = $this->emailExist($request->email);
-                $phoneNumberExist = $this->phoneNumberExist($request->phone);
+                // If email was sent as an input data
+                if (isset($request->email)) {
 
-                if ($emailExist && ($user->api_key != $request->header('Authorization')) ) {
+                    // Check if email exist
+                    $emailExist = User::whereEmail($request->email)->first();
+
+                    // If email exist
+                    if (count($emailExist) !== 0) {
+
+                      // Check if api for user with email corresponds to Authorization key to determine if its same user
+                      if ($emailExist->api_key === $request->header('Authorization') ) {
+                          $userIntegrity = true;
+                      }else {
+                          $userIntegrity = false;
+                      }
+
+                    }
+
+                }
+                if (isset($request->phone)) {
+
+                    $phoneNumberExist = User::where('phone' , $request->phone)->first();
+
+                    if (count($phoneNumberExist) !== 0) {
+
+                      if ($phoneNumberExist->api_key === $request->header('Authorization') ) {
+                          $userIntegrity = true;
+                      }else {
+                          $userIntegrity = false;
+                      }
+
+                    }
+
+                }
+
+                if ( (count($emailExist) !== 0) && (!($userIntegrity)) ) {
 
                     $user = "Email address already exist";
 
-                }elseif ($phoneNumberExist && ($user->api_key != $request->header('Authorization')) ) {
+                }elseif ( (count($phoneNumberExist) !== 0) && (!($userIntegrity)) ) {
 
                     $user = "Phone number already exist";
 
-                }else {
+                }elseif ($userIntegrity) {
 
-                  // Update user details
-                  $user->update($request->all());
+                    // Update user details
+                    $user->update($request->all());
 
                 }
 

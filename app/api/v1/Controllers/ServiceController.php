@@ -81,4 +81,46 @@ class ServiceController extends Controller
     }
 
 
+    /**
+     * Update a User
+     *
+     * @param int $id
+     *
+     * @param object $request
+     *
+     * @return JSON
+     *
+     */
+    public function updateServices(Request $request)
+    {
+
+      // Call the updateUser method of UserRepository
+      $service = $this->service->updateServices($request);
+
+      if ($service == "User details not found") {
+
+          // Create a custom array as response
+          $response = [
+              "status" => "failed",
+              "code" => 404,
+              "message" => $service,
+              "data" => NULL
+          ];
+
+      }else {
+
+        // Create a custom array as response
+        $response = [
+            "status" => "success",
+            "code" => 200,
+            "message" => "Services updated successfully",
+            "data" => $service
+        ];
+
+      }
+
+      // return the custom in JSON format
+      return response()->json($response);
+    }
+
 }

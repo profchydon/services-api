@@ -68,12 +68,9 @@ Route::group(['prefix' => 'api/v1'], function () {
 
     // Service route
     Route::group(['prefix' => 'services'], function () {
-
         Route::post('create' , ['as' => 'createService', 'uses' => 'ServiceController@create']);
         Route::get('' , ['as' => 'allServices', 'uses' => 'ServiceController@services']);
-        Route::get('{id}' , ['as' => 'fetchAEscort', 'uses' => 'EscortController@fetchAUser']);
-        Route::post('update' , ['as' => 'updateEscort', 'uses' => 'EscortController@updateUser']);
-        Route::post('sendmail' , ['as' => 'sendMail', 'uses' => 'EscortController@sendVerificationMail']);
+        Route::post('update' , ['as' => 'updateEscort', 'uses' => 'ServiceController@updateServices']);
     });
 
     // Verifications route

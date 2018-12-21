@@ -15,6 +15,7 @@ use DB;
 use Illuminate\Support\Facades\Hash;
 use Ramsey\Uuid\Uuid;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Schema;
 
 
 class EscortRepository
@@ -178,6 +179,8 @@ class EscortRepository
                 // Fetch the cotenant's accept details
                 $services = Service::where('escort_id' , $escort->id)->first();
 
+                $servicesFields = Schema::getColumnListing('services');
+
                 // Fetch the cotenant's transaction details
                 $images = Image::where('escort_id' , $escort->id)->orWhere('user_id' , $user->id)->first();
 
@@ -192,6 +195,7 @@ class EscortRepository
                 $data['images'] = $images;
                 $data['videos'] = $videos;
                 $data['transaction'] = $transaction;
+                $data['servicesFields'] = $servicesFields;
 
               }else {
 

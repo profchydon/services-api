@@ -31,6 +31,7 @@ class ReviewController extends Controller
     {
         // Inject VeriRepository Class into VerificationController
         $this->review = $review;
+        $this->middleware('auth', ['except' => []]);
 
     }
 

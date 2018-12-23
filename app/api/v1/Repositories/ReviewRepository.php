@@ -36,15 +36,6 @@ class ReviewRepository
     }
 
 
-    public function allTransactions()
-    {
-
-        $transactions = Transaction::all();
-
-        return $transactions;
-
-    }
-
 }
 
 

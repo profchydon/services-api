@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Ramsey\Uuid\Uuid;
 
 
+
 class UserRepository
 {
 

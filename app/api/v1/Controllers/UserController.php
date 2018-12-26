@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Api\v1\Repositories\UserRepository;
 use App\Api\v1\Repositories\ActivationRepository;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendActivationMail;
 
 
 class UserController extends Controller
@@ -77,6 +79,8 @@ class UserController extends Controller
 
           $data['user'] = $user;
           $data['activation'] = $activation;
+
+          Mail::to($user->email)->send(new SendActivationMail($user->email , $activation->code));
 
           // Create a custom array as response
           $response = [

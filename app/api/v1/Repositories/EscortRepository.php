@@ -242,7 +242,7 @@ class EscortRepository
       public function escorts()
       {
           // Fetch the user with email
-          $escorts = Escort::where('verified' , 1)->get(['id' , 'user_id' , 'rank', 'verified', 'state' , 'city' , 'profile_image']);
+          $escorts = Escort::where('verified' , 1)->limit(8)->get(['id' , 'user_id' , 'rank', 'verified', 'state' , 'city' , 'profile_image']);
 
           $count = 1;
 
@@ -276,7 +276,7 @@ class EscortRepository
       public function getPlatinumEscorts()
       {
           // Fetch the user with email
-          $escorts = Escort::where('verified' , 1)->where('rank' , 'platinum')->get(['id' , 'user_id' , 'rank', 'state' , 'city' , 'profile_image', 'verified']);
+          $escorts = Escort::where('verified' , 1)->where('rank' , 'platinum')->limit(16)->get(['id' , 'user_id' , 'rank', 'state' , 'city' , 'profile_image', 'verified']);
 
           $count = 1;
 

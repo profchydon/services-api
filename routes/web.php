@@ -59,11 +59,12 @@ Route::group(['prefix' => 'api/v1'], function () {
 
         Route::post('create' , ['as' => 'createEscort', 'uses' => 'EscortController@create']);
         Route::get('' , ['as' => 'allEscort', 'uses' => 'EscortController@escorts']);
+        Route::get('all' , ['as' => 'allEscortForDisplay', 'uses' => 'EscortController@all']);
+        Route::get('{rank}/all' , 'EscortController@allEscortsByRank');
         Route::get('{escort}' , ['as' => 'fetchAEscort', 'uses' => 'EscortController@escortDetails']);
         Route::post('update' , ['as' => 'updateEscort', 'uses' => 'EscortController@updateEscort']);
         Route::get('details/feed' , ['as' => 'feed', 'uses' => 'EscortController@getEscortsForHomepage']);
         Route::get('details/dashboard' , ['as' => 'escortDetailsForDashboard', 'uses' => 'EscortController@escortDetailsForDashboard']);
-        Route::get('vip/all' , ['as' => 'getVIPEscorts', 'uses' => 'EscortController@getVIPEscorts']);
     });
 
     // Service route
@@ -82,7 +83,7 @@ Route::group(['prefix' => 'api/v1'], function () {
     // Verifications route
     Route::group(['prefix' => 'features'], function () {
         Route::post('create' , 'FeatureController@create');
-        // Route::post('user/verify' , 'VerificationController@verifyUser');
+        Route::get('all' , 'FeatureController@all');
     });
 
     // Verifications route

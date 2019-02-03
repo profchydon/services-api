@@ -266,6 +266,74 @@ class EscortRepository
       }
 
       /**
+     * Fetch all records of a tenant
+     *
+     * @param object $request
+     *
+     * @return array $data
+     *
+     */
+      public function all()
+      {
+          // Fetch the user with email
+          $escorts = Escort::where('verified' , 1)->get(['id' , 'user_id' , 'rank', 'verified', 'state' , 'city' , 'profile_image']);
+
+          $count = 1;
+
+          if (count($escorts) === 0) {
+
+              return $data = "No escort available right now";
+
+          }else {
+
+              foreach ($escorts as $key => $escort) {
+
+                  $data[$count] = $this->escortDetailsForFeed($escort);
+                  $count++;
+              }
+
+              return $data;
+
+          }
+
+
+      }
+
+      /**
+     * Fetch all records of a tenant
+     *
+     * @param object $request
+     *
+     * @return array $data
+     *
+     */
+      public function allEscortsByRank($rank)
+      {
+          // Fetch the user with email
+          $escorts = Escort::where('verified' , 1)->where('rank' , $rank)->get(['id' , 'user_id' , 'rank', 'verified', 'state' , 'city' , 'profile_image']);
+
+          $count = 1;
+
+          if (count($escorts) === 0) {
+
+              return $data = "No escort available right now";
+
+          }else {
+
+              foreach ($escorts as $key => $escort) {
+
+                  $data[$count] = $this->escortDetailsForFeed($escort);
+                  $count++;
+              }
+
+              return $data;
+
+          }
+
+
+      }
+
+      /**
      * Fetch all records of a VIP escort
      *
      * @param object $request

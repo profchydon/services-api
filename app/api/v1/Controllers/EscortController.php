@@ -6,34 +6,26 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Api\v1\Repositories\UserRepository;
 use App\Api\v1\Repositories\EscortRepository;
+use App\Api\v1\Repositories\FeatureRepository;
 
 
 class EscortController extends Controller
 {
 
-    /**
-     * The User
-     *
-     * @var object
-     */
     private $user;
-
-    /**
-     * The Verification
-     *
-     * @var object
-     */
     private $escort;
+    private $feature;
 
     /**
      * Class constructor
      */
-    public function __construct(UserRepository $user, EscortRepository $escort)
+    public function __construct(UserRepository $user, EscortRepository $escort, FeatureRepository $feature)
     {
         // Inject UserRepository Class into UserController
         $this->user = $user;
         $this->escort = $escort;
-        $this->middleware('auth', ['except' => ['create', 'escorts' , 'escortDetails', 'getEscortsForHomepage', 'getPlatinumEscorts' , 'escortDetailsForDashboard']]);
+        $this->feature = $feature;
+        $this->middleware('auth', ['except' => ['create', 'escorts' , 'allEscortsByRank', 'all', 'escortDetails', 'getEscortsForHomepage', 'getPlatinumEscorts' , 'escortDetailsForDashboard']]);
 
     }
 
@@ -64,6 +56,33 @@ class EscortController extends Controller
 
     }
 
+      /**
+     * Create a  new User
+     *
+     * @param object $request
+     *
+     * @return JSON
+     *
+     */
+    public function escorts ()
+    {
+
+        // Call the create method of UserRepository
+        $escorts = $this->escort->escorts();
+
+        // Create a custom array as response
+        $response = [
+            "status" => "success",
+            "code" => 200,
+            "message" => "Ok",
+            "data" => $escorts
+        ];
+
+        // return the custom in JSON format
+        return response()->json($response);
+
+    }
+
     /**
    * Create a  new User
    *
@@ -72,11 +91,11 @@ class EscortController extends Controller
    * @return JSON
    *
    */
-  public function escorts ()
+  public function all ()
   {
 
       // Call the create method of UserRepository
-      $escorts = $this->escort->escorts();
+      $escorts = $this->escort->all();
 
       // Create a custom array as response
       $response = [
@@ -91,14 +110,47 @@ class EscortController extends Controller
 
   }
 
+  /**
+ * Create a  new User
+ *
+ * @param object $request
+ *
+ * @return JSON
+ *
+ */
+public function allEscortsByRank ($rank)
+{
+
+    // Call the create method of UserRepository
+    $escorts = $this->escort->allEscortsByRank($rank);
+    $features = $this->feature->all();
+
+    $data['escorts'] = $escorts;
+    $data['features'] = $features;
+
+    // Create a custom array as response
+    $response = [
+        "status" => "success",
+        "code" => 200,
+        "message" => "Ok",
+        "data" => $data
+    ];
+
+    // return the custom in JSON format
+    return response()->json($response);
+
+}
+
 
     public function getEscortsForHomepage()
     {
         $escorts = $this->escort->escorts();
         $platinumEscorts = $this->escort->getPlatinumEscorts();
+        $features = $this->feature->all();
 
         $data['escorts'] = $escorts;
         $data['platinumEscorts'] = $platinumEscorts;
+        $data['features'] = $features;
 
         // Create a custom array as response
         $response = [

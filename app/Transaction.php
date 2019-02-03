@@ -18,7 +18,7 @@ class Transaction extends Model implements AuthenticatableContract, Authorizable
      * @var array
      */
     protected $fillable = [
-        'user_id', 'type', 'amount',
+        'user_id', 'type', 'amount', 'reference_id'
     ];
 
     /**

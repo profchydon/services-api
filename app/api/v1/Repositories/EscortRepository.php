@@ -67,6 +67,9 @@ class EscortRepository
             'outcall_1dy' => $request->outcall_1dy,
             'outcall_overnight' => $request->outcall_overnight,
             'outcall_1wk' => $request->outcall_1wk,
+            'video_sex' => $request->video_sex,
+            'sex_chat' => $request->sex_chat,
+            'nudes' => $request->nudes,
         ]);
 
         if (!$escort) {

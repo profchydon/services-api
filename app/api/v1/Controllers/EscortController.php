@@ -96,13 +96,17 @@ class EscortController extends Controller
 
       // Call the create method of UserRepository
       $escorts = $this->escort->all();
+      $features = $this->feature->all();
+
+      $data['escorts'] = $escorts;
+      $data['features'] = $features;
 
       // Create a custom array as response
       $response = [
           "status" => "success",
           "code" => 200,
           "message" => "Ok",
-          "data" => $escorts
+          "data" => $data
       ];
 
       // return the custom in JSON format

@@ -77,7 +77,7 @@ Route::group(['prefix' => 'api/v1'], function () {
     // Verifications route
     Route::group(['prefix' => 'verifications'], function () {
         Route::post('create' , 'VerificationController@create');
-        Route::post('user/verify' , 'VerificationController@verifyUser');
+        Route::post('escort/verify' , 'VerificationController@verifyEscort');
     });
 
     // Verifications route

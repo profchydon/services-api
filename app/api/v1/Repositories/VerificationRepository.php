@@ -79,16 +79,23 @@ class VerificationRepository
 
     }
 
-    public function verifyEscort($escort_id)
+    public function verifyEscort($request)
     {
-        $checkEscortVerification = $this->getEscortVerification($escort_id);
+        $checkEscortVerification = $this->getEscortVerification($request->escort_id);
 
         if ($checkEscortVerification !== NULL) {
-            $escort = $this->getEscort($escort_id);
-            $escort = $escort->update(['verified' => 1 ]);
+
+            $escort = $this->getEscort($request->escort_id);
+            $escort->update([
+              'verified' => 1
+            ]);
+            $escort->update([
+              'verification_ongoing' => 0
+            ]);
+            $checkEscortVerification->delete();
         }
 
-        $checkIfVerified = $this->getEscort($escort_id);
+        $checkIfVerified = $this->getEscort($request->escort_id);
 
         if ($checkIfVerified->verified === 1) {
 

@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    'host' => env('MAIL_HOST', 'api.xcort.africausaforums.com'),
 
     /*
     |--------------------------------------------------------------------------

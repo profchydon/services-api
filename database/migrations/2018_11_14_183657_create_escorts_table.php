@@ -34,6 +34,7 @@ class CreateEscortsTable extends Migration
         $table->string('sex_orientation')->nullable();
         $table->string('language')->nullable();
         $table->integer('verified')->default(0)->nullable();
+        $table->integer('verification_ongoing')->default(1)->nullable();
         $table->enum('rank' , ['regular', 'silver', 'gold', 'platinum'])->default('regular')->nullable();
         $table->string('views')->nullable();
         $table->string('incall_1hr')->nullable();
@@ -44,6 +45,9 @@ class CreateEscortsTable extends Migration
         $table->string('outcall_1dy')->nullable();
         $table->string('outcall_overnight')->nullable();
         $table->string('outcall_1wk')->nullable();
+        $table->string('video_sex')->nullable();
+        $table->string('sex_chat')->nullable();
+        $table->string('nudes')->nullable();
         $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         $table->timestamps();
         });

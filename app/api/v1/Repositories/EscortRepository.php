@@ -58,6 +58,7 @@ class EscortRepository
             'about' => $request->about,
             'sex_orientation' => $request->sex_orientation,
             'language' => $request->language,
+            'rank' => "regular",
             'views' => $request->views,
             'incall_1hr' => $request->incall_1hr,
             'incall_1dy' => $request->incall_1dy,
@@ -69,6 +70,7 @@ class EscortRepository
             'outcall_1wk' => $request->outcall_1wk,
             'video_sex' => $request->video_sex,
             'sex_chat' => $request->sex_chat,
+            'phone_sex' => $request->phone_sex,
             'nudes' => $request->nudes,
         ]);
 
@@ -187,7 +189,7 @@ class EscortRepository
                 // Fetch the cotenant's transaction details
                 $images = Image::where('escort_id' , $escort->id)->orWhere('user_id' , $user->id)->first();
 
-                $transaction = Transaction::where('user_id' , $user->id)->get();
+                $transaction = Transaction::where('user_id' , $user->id)->latest()->get();
 
                 // Fetch the cotenant's transaction details
                 $videos = Video::where('escort_id' , $escort->id)->orWhere('user_id' , $user->id)->first();
@@ -245,7 +247,7 @@ class EscortRepository
       public function escorts()
       {
           // Fetch the user with email
-          $escorts = Escort::where('verified' , 1)->limit(8)->get(['id' , 'user_id' , 'rank', 'verified', 'state' , 'city' , 'profile_image']);
+          $escorts = Escort::where('verified' , 1)->limit(12)->get(['id' , 'user_id' , 'rank', 'verified', 'state' , 'city' , 'profile_image']);
 
           $count = 1;
 
@@ -336,6 +338,59 @@ class EscortRepository
 
       }
 
+
+      public function getEscortsByGender($gender)
+      {
+          // Fetch the user with email
+          $escorts = Escort::where('verified' , 1)->where('gender' , $gender)->get(['id' , 'user_id' , 'rank', 'verified', 'state' , 'city' , 'profile_image']);
+
+          $count = 1;
+
+          if (count($escorts) === 0) {
+
+              return $data = "No escort available right now";
+
+          }else {
+
+              foreach ($escorts as $key => $escort) {
+
+                  $data[$count] = $this->escortDetailsForFeed($escort);
+                  $count++;
+              }
+
+              return $data;
+
+          }
+
+
+      }
+
+      public function getEscortsBySearch($field, $value)
+      {
+          // Fetch the user with email
+          $escorts = Escort::where('verified' , 1)->where($field , 'like' , $value)->get(['id' , 'user_id' , 'rank', 'verified', 'state' , 'city' , 'profile_image']);
+
+          $count = 1;
+
+          if (count($escorts) === 0) {
+
+              return $data = "No escort available right now";
+
+          }else {
+
+              foreach ($escorts as $key => $escort) {
+
+                  $data[$count] = $this->escortDetailsForFeed($escort);
+                  $count++;
+              }
+
+              return $data;
+
+          }
+
+
+      }
+
       /**
      * Fetch all records of a VIP escort
      *
@@ -347,13 +402,65 @@ class EscortRepository
       public function getPlatinumEscorts()
       {
           // Fetch the user with email
-          $escorts = Escort::where('verified' , 1)->where('rank' , 'platinum')->limit(16)->get(['id' , 'user_id' , 'rank', 'state' , 'city' , 'profile_image', 'verified']);
+          $escorts = Escort::where('verified' , 1)->where('rank' , 'platinum')->limit(18)->get(['id' , 'user_id' , 'rank', 'state' , 'city' , 'profile_image', 'verified']);
 
           $count = 1;
 
           if (count($escorts) === 0) {
 
               return $data = "No platinum escort available right now";
+
+          }else {
+
+            foreach ($escorts as $key => $escort) {
+
+                $data[$count] = $this->escortDetailsForFeed($escort);
+                $count++;
+
+            }
+
+            return $data;
+
+          }
+
+      }
+
+      public function getSilverEscorts()
+      {
+          // Fetch the user with email
+          $escorts = Escort::where('verified' , 1)->where('rank' , 'silver')->limit(12)->get(['id' , 'user_id' , 'rank', 'state' , 'city' , 'profile_image', 'verified']);
+
+          $count = 1;
+
+          if (count($escorts) === 0) {
+
+              return $data = "No silver escort available right now";
+
+          }else {
+
+            foreach ($escorts as $key => $escort) {
+
+                $data[$count] = $this->escortDetailsForFeed($escort);
+                $count++;
+
+            }
+
+            return $data;
+
+          }
+
+      }
+
+      public function getGoldEscorts()
+      {
+          // Fetch the user with email
+          $escorts = Escort::where('verified' , 1)->where('rank' , 'gold')->limit(12)->get(['id' , 'user_id' , 'rank', 'state' , 'city' , 'profile_image', 'verified']);
+
+          $count = 1;
+
+          if (count($escorts) === 0) {
+
+              return $data = "No gold escort available right now";
 
           }else {
 

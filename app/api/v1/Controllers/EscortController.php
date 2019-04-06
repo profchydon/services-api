@@ -25,7 +25,7 @@ class EscortController extends Controller
         $this->user = $user;
         $this->escort = $escort;
         $this->feature = $feature;
-        $this->middleware('auth', ['except' => ['create', 'escorts' , 'allEscortsByRank', 'all', 'escortDetails', 'getEscortsForHomepage', 'getPlatinumEscorts' , 'escortDetailsForDashboard']]);
+        $this->middleware('auth', ['except' => ['create', 'escorts' , 'allEscortsByRank', 'all', 'escortDetails', 'getEscortsForHomepage', 'getPlatinumEscorts' , 'escortDetailsForDashboard' , 'getEscortsByGender', 'getEscortsBySearch']]);
 
     }
 
@@ -114,46 +114,94 @@ class EscortController extends Controller
 
   }
 
-  /**
- * Create a  new User
- *
- * @param object $request
- *
- * @return JSON
- *
- */
-public function allEscortsByRank ($rank)
-{
+    /**
+   * Create a  new User
+   *
+   * @param object $request
+   *
+   * @return JSON
+   *
+   */
+  public function allEscortsByRank ($rank)
+  {
 
-    // Call the create method of UserRepository
-    $escorts = $this->escort->allEscortsByRank($rank);
-    $features = $this->feature->all();
+      // Call the create method of UserRepository
+      $escorts = $this->escort->allEscortsByRank($rank);
+      $features = $this->feature->all();
 
-    $data['escorts'] = $escorts;
-    $data['features'] = $features;
+      $data['escorts'] = $escorts;
+      $data['features'] = $features;
 
-    // Create a custom array as response
-    $response = [
-        "status" => "success",
-        "code" => 200,
-        "message" => "Ok",
-        "data" => $data
-    ];
+      // Create a custom array as response
+      $response = [
+          "status" => "success",
+          "code" => 200,
+          "message" => "Ok",
+          "data" => $data
+      ];
 
-    // return the custom in JSON format
-    return response()->json($response);
+      // return the custom in JSON format
+      return response()->json($response);
 
-}
+  }
+
+  public function getEscortsByGender ($gender)
+  {
+
+      $escorts = $this->escort->getEscortsByGender($gender);
+      $features = $this->feature->all();
+
+      $data['escorts'] = $escorts;
+      $data['features'] = $features;
+
+      // Create a custom array as response
+      $response = [
+          "status" => "success",
+          "code" => 200,
+          "message" => "Ok",
+          "data" => $data
+      ];
+
+      // return the custom in JSON format
+      return response()->json($response);
+
+  }
+
+  public function getEscortsBySearch($field, $value)
+  {
+
+      $escorts = $this->escort->getEscortsBySearch($field, $value);
+      $features = $this->feature->all();
+
+      $data['escorts'] = $escorts;
+      $data['features'] = $features;
+
+      // Create a custom array as response
+      $response = [
+          "status" => "success",
+          "code" => 200,
+          "message" => "Ok",
+          "data" => $data
+      ];
+
+      // return the custom in JSON format
+      return response()->json($response);
+
+  }
 
 
     public function getEscortsForHomepage()
     {
         $escorts = $this->escort->escorts();
         $platinumEscorts = $this->escort->getPlatinumEscorts();
+        $silverEscorts = $this->escort->getSilverEscorts();
+        $goldEscorts = $this->escort->getGoldEscorts();
         $features = $this->feature->all();
 
         $data['escorts'] = $escorts;
         $data['platinumEscorts'] = $platinumEscorts;
+        $data['goldEscorts'] = $goldEscorts;
+        $data['silverEscorts'] = $silverEscorts;
         $data['features'] = $features;
 
         // Create a custom array as response

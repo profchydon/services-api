@@ -46,6 +46,9 @@ class TransactionController extends Controller
     public function create (Request $request)
     {
 
+        // var_dump($request->reference_id);
+        // die();
+
         try {
 
             // Call the create method of VerificationRepository

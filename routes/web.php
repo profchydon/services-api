@@ -23,12 +23,8 @@ Route::group(['prefix' => 'api/v1'], function () {
         Route::post('verify/escort' , 'AdminController@verifyEscort');
         Route::get('verify/all' , 'AdminController@allVerifications');
 
-
         // Transactions
         Route::get('transactions/all' , 'AdminController@allTransactions');
-
-
-
     });
 
     // Users route
@@ -61,6 +57,9 @@ Route::group(['prefix' => 'api/v1'], function () {
         Route::get('' , ['as' => 'allEscort', 'uses' => 'EscortController@escorts']);
         Route::get('all' , ['as' => 'allEscortForDisplay', 'uses' => 'EscortController@all']);
         Route::get('{rank}/all' , 'EscortController@allEscortsByRank');
+        // Route::get('gender/{gender}' , 'EscortController@getEscortsByGender');
+        Route::get('search/{field}/{value}' , 'EscortController@getEscortsBySearch');
+        // Route::get('country/{country}' , 'EscortController@getEscortsByCountry');
         Route::get('{escort}' , ['as' => 'fetchAEscort', 'uses' => 'EscortController@escortDetails']);
         Route::post('update' , ['as' => 'updateEscort', 'uses' => 'EscortController@updateEscort']);
         Route::get('details/feed' , ['as' => 'feed', 'uses' => 'EscortController@getEscortsForHomepage']);

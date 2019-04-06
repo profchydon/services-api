@@ -26,6 +26,12 @@ class VerificationRepository
         'status' => "Open",
       ]);
 
+      $escort = Escort::where('id' , $request->escort_id)->first();
+
+      $escort->update([
+        'verification_ongoing' => 1
+      ]);
+
       if (!$verification) {
         DB::rollback();
       }else {

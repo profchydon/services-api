@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Api\v1\Repositories\AdminRepository;
 use App\Api\v1\Repositories\VerificationRepository;
 use App\Api\v1\Repositories\TransactionRepository;
+use App\Api\v1\Repositories\FeatureRepository;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -34,13 +36,14 @@ class AdminController extends Controller
     /**
      * Class constructor
      */
-    public function __construct(AdminRepository $admin, VerificationRepository $verification, TransactionRepository $transaction)
+    public function __construct(AdminRepository $admin, VerificationRepository $verification, TransactionRepository $transaction, FeatureRepository $feature)
     {
         // Inject InterestRepository Class into InterestController
         $this->verification = $verification;
         $this->admin = $admin;
         $this->transaction = $transaction;
-        $this->middleware('auth', ['except' => []]);
+        $this->feature = $feature;
+        $this->middleware('auth', ['except' => ['purgeExpiredSubscription']]);
     }
 
     public function allVerifications()
@@ -188,6 +191,43 @@ class AdminController extends Controller
 
         }
 
+
+    }
+
+    /**
+     *
+     * @param object $request
+     *
+     * @return JSON
+     *
+     */
+    public function purgeExpiredSubscription ()
+    {
+
+        try {
+
+            $features = $this->feature->getAllForPurge();
+
+            foreach ($features as $key => $feature) {
+              $now = Carbon::now();
+              $date = Carbon::parse($feature['created_at']);
+              $difference = $now->diffInDays($date);
+              if ($difference > $feature['duration']) {
+                $features = $this->feature->purgeExpiredFeature($feature['id']);
+
+                if ($features) {
+                  // code...
+                }else {
+                  // Send email to notify that cron job failed
+                }
+              }
+            }
+
+
+        } catch (\Exception $e) {
+
+          
+        }
 
     }
 

@@ -189,7 +189,10 @@ class EscortRepository
                 // Fetch the cotenant's transaction details
                 $images = Image::where('escort_id' , $escort->id)->orWhere('user_id' , $user->id)->first();
 
-                $transaction = Transaction::where('user_id' , $user->id)->latest()->get();
+                $transactions = Transaction::where('user_id' , $user->id)->latest()->get();
+
+                // Fetch the cotenant's visit details
+                $features = Feature::where('escort_id' , $escort->id)->get();
 
                 // Fetch the cotenant's transaction details
                 $videos = Video::where('escort_id' , $escort->id)->orWhere('user_id' , $user->id)->first();
@@ -199,7 +202,8 @@ class EscortRepository
                 $data['services'] = $services;
                 $data['images'] = $images;
                 $data['videos'] = $videos;
-                $data['transaction'] = $transaction;
+                $data['transaction'] = $transactions;
+                $data['features'] = $features;
                 $data['servicesFields'] = $servicesFields;
 
               }else {

@@ -55,7 +55,7 @@ class FeatureController extends Controller
             $response = [
                 "status" => "success",
                 "code" => 201,
-                "message" => "Feature successful created",
+                "message" => "Feature successfully created",
                 "data" => $feature
             ];
 
@@ -120,6 +120,9 @@ class FeatureController extends Controller
         }
 
     }
+
+
+
 
 
 }

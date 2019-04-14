@@ -61,8 +61,17 @@ class FeatureRepository
         return $escorts;
     }
 
-}
+    public function getAllForPurge() {
+        $all = Feature::all();
+        return $all;
+    }
 
+    public function purgeExpiredFeature($id) {
+        $deleteFeature = Feature::whereId($id)->delete();
+        return $deleteFeature;
+    }
+
+}
 
 
  ?>

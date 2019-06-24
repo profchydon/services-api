@@ -4,8 +4,8 @@ namespace App\Api\V1\Controllers;
 
 use Illuminate\Http\Request;
 use App\Verification;
-use App\Api\v1\Repositories\VerificationRepository;
-use App\Api\v1\Repositories\UserRepository;
+use App\Api\V1\Repositories\VerificationRepository;
+use App\Api\V1\Repositories\UserRepository;
 
 class VerificationController extends Controller
 {

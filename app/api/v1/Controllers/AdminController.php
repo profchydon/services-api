@@ -3,10 +3,10 @@
 namespace App\Api\V1\Controllers;
 
 use Illuminate\Http\Request;
-use App\Api\v1\Repositories\AdminRepository;
-use App\Api\v1\Repositories\VerificationRepository;
-use App\Api\v1\Repositories\TransactionRepository;
-use App\Api\v1\Repositories\FeatureRepository;
+use App\Api\V1\Repositories\AdminRepository;
+use App\Api\V1\Repositories\VerificationRepository;
+use App\Api\V1\Repositories\TransactionRepository;
+use App\Api\V1\Repositories\FeatureRepository;
 use Carbon\Carbon;
 
 class AdminController extends Controller

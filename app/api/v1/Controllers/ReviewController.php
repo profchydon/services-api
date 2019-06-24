@@ -4,8 +4,8 @@ namespace App\Api\V1\Controllers;
 
 use Illuminate\Http\Request;
 use App\Review;
-use App\Api\v1\Repositories\ReviewRepository;
-use App\Api\v1\Repositories\UserRepository;
+use App\Api\V1\Repositories\ReviewRepository;
+use App\Api\V1\Repositories\UserRepository;
 
 class ReviewController extends Controller
 {

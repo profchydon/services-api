@@ -4,8 +4,8 @@ namespace App\Api\V1\Controllers;
 
 use Illuminate\Http\Request;
 use App\Activation;
-use App\Api\v1\Repositories\ActivationRepository;
-use App\Api\v1\Repositories\UserRepository;
+use App\Api\V1\Repositories\ActivationRepository;
+use App\Api\V1\Repositories\UserRepository;
 
 class ActivationController extends Controller
 {

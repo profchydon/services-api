@@ -4,8 +4,8 @@ namespace App\Api\V1\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use App\Api\v1\Repositories\VideoRepository;
-use App\Api\v1\Repositories\EscortRepository;
+use App\Api\V1\Repositories\VideoRepository;
+use App\Api\V1\Repositories\EscortRepository;
 
 
 class VideoController extends Controller

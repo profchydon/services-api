@@ -4,8 +4,8 @@ namespace App\Api\V1\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use App\Api\v1\Repositories\UserRepository;
-use App\Api\v1\Repositories\ActivationRepository;
+use App\Api\V1\Repositories\UserRepository;
+use App\Api\V1\Repositories\ActivationRepository;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendActivationMail;
 

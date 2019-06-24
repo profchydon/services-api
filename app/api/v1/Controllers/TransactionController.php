@@ -4,8 +4,8 @@ namespace App\Api\V1\Controllers;
 
 use Illuminate\Http\Request;
 use App\Transaction;
-use App\Api\v1\Repositories\TransactionRepository;
-use App\Api\v1\Repositories\UserRepository;
+use App\Api\V1\Repositories\TransactionRepository;
+use App\Api\V1\Repositories\UserRepository;
 
 class TransactionController extends Controller
 {

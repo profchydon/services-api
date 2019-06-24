@@ -236,9 +236,17 @@ class EscortRepository
       {
 
         $user = User::whereId($escort->user_id)->first(['name' , 'username']);
+        $video = Video::where('escort_id' , $escort->id)->get();
+
+        $hasVideo = false;
+
+        if (count($video) > 0) {
+            $hasVideo = true;
+        }
 
         $data['user'] = $user;
         $data['escort'] = $escort;
+        $data['video'] = $hasVideo;
 
         return $data;
       }

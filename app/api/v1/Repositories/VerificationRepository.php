@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Api\v1\Repositories;
+namespace App\Api\V1\Repositories;
 
 use App\Verification;
 use App\User;

@@ -15,7 +15,7 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-Route::group(['prefix' => 'Api/V1'], function () {
+Route::group(['prefix' => 'api/v1'], function () {
 
     Route::group(['prefix' => 'admin'], function () {
 

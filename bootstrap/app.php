@@ -96,7 +96,7 @@ $app->register(\Illuminate\Mail\MailServiceProvider::class);
 */
 
 $app->router->group([
-    'namespace' => 'App\Api\v1\Controllers',
+    'namespace' => 'App\Api\V1\Controllers',
 ], function ($router) {
     require __DIR__.'/../routes/web.php';
 });

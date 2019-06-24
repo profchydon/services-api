@@ -73,7 +73,7 @@ class SubscriptionController extends Controller
               "status" => "failed",
               "code" => 404,
               "message" => "Error! Sorry server could not process this request",
-              "data" => NULL
+              "data" => "NULL"
           ];
 
           // return the custom in JSON format

@@ -3,6 +3,7 @@
 namespace App\Api\V1\Repositories;
 
 use App\Escort;
+use App\User;
 use App\Verification;
 use Illuminate\Http\Request;
 use DB;

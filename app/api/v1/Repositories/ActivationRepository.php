@@ -4,6 +4,7 @@ namespace App\Api\V1\Repositories;
 
 use App\Activation;
 use App\User;
+use App\Escort;
 use Illuminate\Http\Request;
 use DB;
 

@@ -4,6 +4,8 @@ namespace App\Api\V1\Controllers;
 
 use Illuminate\Http\Request;
 use App\Transaction;
+use App\User;
+use App\Escort;
 use App\Api\V1\Repositories\TransactionRepository;
 use App\Api\V1\Repositories\UserRepository;
 

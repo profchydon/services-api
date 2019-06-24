@@ -4,6 +4,7 @@ namespace App\Api\V1\Controllers;
 
 use Illuminate\Http\Request;
 use App\Activation;
+use App\User;
 use App\Api\V1\Repositories\ActivationRepository;
 use App\Api\V1\Repositories\UserRepository;
 

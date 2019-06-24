@@ -4,6 +4,7 @@ namespace App\Api\V1\Controllers;
 
 use Illuminate\Http\Request;
 use App\Verification;
+use App\Escort;
 use App\Api\V1\Repositories\VerificationRepository;
 use App\Api\V1\Repositories\UserRepository;
 

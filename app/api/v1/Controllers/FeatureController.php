@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Feature;
 use App\User;
 use App\Escort;
+use App\Service;
 use App\Api\V1\Repositories\FeatureRepository;
 
 class FeatureController extends Controller

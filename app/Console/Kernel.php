@@ -14,6 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
+        'App\Console\Commands\ClearViewCache',
+        'App\Console\Commands\ClearCache'
     ];
 
     /**

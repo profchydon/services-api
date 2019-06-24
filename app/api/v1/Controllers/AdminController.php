@@ -46,6 +46,40 @@ class AdminController extends Controller
         $this->middleware('auth', ['except' => ['purgeExpiredSubscription']]);
     }
 
+    public function dashboard()
+    {
+
+      try {
+
+          $details = $this->admin->dashboard();
+
+          // Create a custom array as response
+          $response = [
+              "status" => "success",
+              "code" => 200,
+              "message" => "Ok",
+              "data" => $details
+          ];
+
+          // return the custom in JSON format
+          return response()->json($response);
+
+      } catch (\Exception $e) {
+
+          // Create a custom array as response
+          $response = [
+              "status" => "failed",
+              "code" => 404,
+              "message" => "Error! Sorry server could not process this request",
+              "data" => NULL
+          ];
+
+          // return the custom in JSON format
+          return response()->json($response);
+
+      }
+    }
+
     public function allVerifications()
     {
 
@@ -157,12 +191,12 @@ class AdminController extends Controller
 
     }
 
-    public function verifyEscort(Request $request)
+    public function verifyEscortTrue(Request $request)
     {
 
         try {
 
-            $verifyEscort = $this->verification->verifyEscort($request->escort_id);
+            $verifyEscort = $this->admin->verifyEscortTrue($request->verification_id, $request->escort_id);
 
             // Create a custom array as response
             $response = [
@@ -226,7 +260,7 @@ class AdminController extends Controller
 
         } catch (\Exception $e) {
 
-          
+
         }
 
     }

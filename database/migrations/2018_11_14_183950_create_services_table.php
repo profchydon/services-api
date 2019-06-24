@@ -35,7 +35,7 @@ class CreateServicesTable extends Migration
           $table->integer('Domination (receiving)')->nullable();
           $table->integer('Double Penetration')->nullable();
           $table->integer('Erotic massage')->nullable();
-          $table->integer('Extraball (Having sex multiple times)')->nullable();
+          // $table->integer('Extraball (Having sex multiple times)')->nullable();
           $table->integer('Face Sitting')->nullable();
           $table->integer('Fetish')->nullable();
           $table->integer('Fisting (giving)')->nullable();

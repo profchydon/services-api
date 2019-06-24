@@ -2,12 +2,8 @@
 
 namespace App\Api\v1\Repositories;
 
-use App\Interest;
-use App\User;
-use App\Accept;
-use App\Transaction;
-use App\Cotenant;
-use App\Visit;
+use App\Escort;
+use App\Verification;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Hash;
@@ -70,7 +66,7 @@ class AdminRepository
       // Fetch user with the api_key provided
       $isAdmin = User::where('api_key', $api_key)->first();
 
-      if ($isAdmin->user_group == "admin") {
+      if ($isAdmin->user_type == "admin") {
 
           // If user has admin privileges
           return true;
@@ -84,6 +80,35 @@ class AdminRepository
 
     }
 
+
+    public function dashboard()
+    {
+
+        $allPendingVerifications = Verification::where('status' , 'Open')->leftjoin('users', 'users.id', '=', 'verifications.user_id')->select('verifications.*' , 'users.id as main_user_id' , 'users.name as name' , 'users.user_type as user_type', 'users.phone as phone')->get();
+
+        return $allPendingVerifications;
+
+    }
+
+    public function verifyEscortTrue($verification_id, $escort_id)
+    {
+          $verification = Verification::whereId($verification_id)->where('escort_id' , $escort_id)->first();
+
+          if ($verification == NULL) {
+              return $verification;
+          }else {
+
+              Escort::whereId($escort_id)->update([
+                'verified' => 1,
+                'verification_ongoing' => 0
+              ]);
+
+              $verification->delete();
+
+              return $verification;
+          }
+
+    }
 
 
 }

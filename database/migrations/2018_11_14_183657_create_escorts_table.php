@@ -47,6 +47,7 @@ class CreateEscortsTable extends Migration
         $table->string('outcall_1wk')->nullable();
         $table->string('video_sex')->nullable();
         $table->string('sex_chat')->nullable();
+		$table->string('phone_sex')->nullable();
         $table->string('nudes')->nullable();
         $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         $table->timestamps();

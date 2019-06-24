@@ -20,8 +20,10 @@ Route::group(['prefix' => 'api/v1'], function () {
     Route::group(['prefix' => 'admin'], function () {
 
         Route::get('verify/escort/{escort_id}' , 'AdminController@escortDetailsForVerification');
-        Route::post('verify/escort' , 'AdminController@verifyEscort');
+        Route::post('verify/escort/true' , 'AdminController@verifyEscortTrue');
         Route::get('verify/all' , 'AdminController@allVerifications');
+
+        Route::get('dashboard' , 'AdminController@dashboard');
 
         // Transactions
         Route::get('transactions/all' , 'AdminController@allTransactions');

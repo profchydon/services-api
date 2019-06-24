@@ -18,7 +18,7 @@ class Verification extends Model implements AuthenticatableContract, Authorizabl
      * @var array
      */
     protected $fillable = [
-        'escort_id', 'image', 'status',
+        'escort_id', 'user_id', 'image', 'status',
     ];
 
     /**

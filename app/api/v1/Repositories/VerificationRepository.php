@@ -22,6 +22,7 @@ class VerificationRepository
 
       $verification = Verification::create([
         'escort_id' => $request->escort_id,
+        'user_id' => $request->user_id,
         'image' => $request->image,
         'status' => "Open",
       ]);
@@ -52,10 +53,10 @@ class VerificationRepository
     public function escortDetailsForVerification($escort_id)
     {
       // Fetch verification with $email from database
-      $data['Escort'] = $this->getEscort($escort_id);
-      $data['User'] = User::whereId($data['Escort']->user_id)->first();
-      $data['Verification'] = $this->getEscortVerification($escort_id);
-      $data['Images'] = Image::where('escort_id' , $escort_id)->first();
+      $data['escort'] = $this->getEscort($escort_id);
+      $data['user'] = User::whereId($data['escort']->user_id)->first();
+      $data['verification'] = $this->getEscortVerification($escort_id);
+      $data['images'] = Image::where('escort_id' , $escort_id)->first();
 
       // return verification
       return $data;

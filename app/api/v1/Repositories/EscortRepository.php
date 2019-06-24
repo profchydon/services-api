@@ -212,7 +212,10 @@ class EscortRepository
                 $data['escort'] = NULL;
                 $data['services'] = NULL;
                 $data['images'] = NULL;
+                $data['videos'] = NULL;
                 $data['transaction'] = NULL;
+                $data['features'] = NULL;
+                $data['servicesFields'] = NULL;
 
               }
 

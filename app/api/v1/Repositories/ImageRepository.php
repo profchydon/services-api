@@ -4,6 +4,7 @@ namespace App\Api\V1\Repositories;
 
 use App\User;
 use App\Image;
+use App\Escort;
 use Illuminate\Http\Request;
 use DB;
 
@@ -26,6 +27,7 @@ class ImageRepository
       DB::beginTransaction();
 
       $escortImagesExist = Image::where('escort_id',$request->escort_id)->orWhere('user_id' , $request->user_id)->get();
+      Escort::whereId($request->escort_id)->update(['profile_image' => $request->image_1]);
 
       if (count($escortImagesExist) == 0) {
 

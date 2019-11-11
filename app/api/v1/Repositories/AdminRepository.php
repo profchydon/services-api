@@ -85,7 +85,7 @@ class AdminRepository
     public function dashboard()
     {
 
-        $allPendingVerifications = Verification::where('status' , 'Open')->leftjoin('users', 'users.id', '=', 'verifications.user_id')->leftjoin('images', 'images.escort_id', '=', 'verifications.escort_id')->select('verifications.*' , 'images.*', 'users.id as main_user_id' , 'users.name as name' , 'users.user_type as user_type', 'users.phone as phone')->get();
+        $allPendingVerifications = Verification::where('status' , 'Open')->leftjoin('users', 'users.id', '=', 'verifications.user_id')->select('verifications.*' , 'users.id as main_user_id' , 'users.name as name' , 'users.user_type as user_type', 'users.phone as phone')->get();
 
         return $allPendingVerifications;
 

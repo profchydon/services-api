@@ -197,8 +197,6 @@ class AdminController extends Controller
     public function verifyEscortTrue(Request $request)
     {
 
-        return $request;
-
         try {
 
             $verifyEscort = $this->admin->verifyEscortTrue($request->verification_id, $request->escort_id);

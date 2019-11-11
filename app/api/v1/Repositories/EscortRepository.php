@@ -271,7 +271,7 @@ class EscortRepository
       public function escorts()
       {
           // Fetch the user with email
-          $escorts = Escort::where('verified' , 1)->limit(12)->get(['id' , 'user_id' , 'rank', 'verified', 'state' , 'city' , 'profile_image']);
+          $escorts = Escort::where('verified' , 1)->limit(6)->get(['id' , 'user_id' , 'rank', 'verified', 'state' , 'city' , 'profile_image']);
 
           $count = 1;
 
@@ -426,7 +426,7 @@ class EscortRepository
       public function getPlatinumEscorts()
       {
           // Fetch the user with email
-          $escorts = Escort::where('verified' , 1)->where('rank' , 'platinum')->limit(18)->get(['id' , 'user_id' , 'rank', 'state' , 'city' , 'profile_image', 'verified']);
+          $escorts = Escort::where('verified' , 1)->where('rank' , 'platinum')->limit(24)->get(['id' , 'user_id' , 'rank', 'state' , 'city' , 'profile_image', 'verified']);
 
           $count = 1;
 
@@ -478,7 +478,7 @@ class EscortRepository
       public function getGoldEscorts()
       {
           // Fetch the user with email
-          $escorts = Escort::where('verified' , 1)->where('rank' , 'gold')->limit(12)->get(['id' , 'user_id' , 'rank', 'state' , 'city' , 'profile_image', 'verified']);
+          $escorts = Escort::where('verified' , 1)->where('rank' , 'gold')->limit(18)->get(['id' , 'user_id' , 'rank', 'state' , 'city' , 'profile_image', 'verified']);
 
           $count = 1;
 

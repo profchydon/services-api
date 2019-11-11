@@ -95,7 +95,7 @@ class AdminRepository
     {
           $verification = Verification::whereId($verification_id)->where('escort_id' , $escort_id)->first();
 
-          dd($verification);
+          dd($verification_id, $escort_id);
 
           if ($verification == NULL) {
               return $verification;

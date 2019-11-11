@@ -93,9 +93,9 @@ class AdminRepository
 
     public function verifyEscortTrue($verification_id, $escort_id)
     {
-          $verification = Verification::whereId($verification_id)->where('escort_id' , $escort_id)->first();
+          $verification = Verification::whereId($verification_id)->where('escort_id' , $escort_id)->get();
 
-          dd($verification_id, $escort_id);
+          dd($verification);
 
           if ($verification == NULL) {
               return $verification;

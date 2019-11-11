@@ -93,28 +93,28 @@ class AdminRepository
 
     public function verifyEscortTrue($verification_id, $escort_id)
     {
-          $verification = Verification::where('escort_id' , $escort_id)->first();
+          $verification = Verification::whereId($verification_id)->where('escort_id' , $escort_id)->first();
 
-          dd($verification);
+          // return $verification;
 
           if ($verification == NULL) {
               return $verification;
           }else {
 
-              // Escort::whereId($escort_id)->update([
-              //   'verified' => 1,
-              //   'verification_ongoing' => 0
-              // ]);
+              Escort::whereId($escort_id)->update([
+                'verified' => 1,
+                'verification_ongoing' => 0
+              ]);
 
-              $user = User::whereId($verification->user_id)->first(['name' , 'email']);
+              // $user = User::whereId($verification->user_id)->first(['name' , 'email']);
 
               $verification->delete();
 
-              $data['status'] = "passed";
-              $data['email'] = $user->user->email;
-              $data['name'] = $user->user->name;
+              // $data['status'] = "passed";
+              // $data['email'] = $user->user->email;
+              // $data['name'] = $user->user->name;
 
-              return $data;
+              return $verification;
           }
 
     }

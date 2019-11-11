@@ -236,7 +236,15 @@ class EscortRepository
       {
 
         $user = User::whereId($escort->user_id)->first(['name' , 'username']);
+
         $video = Video::where('escort_id' , $escort->id)->get();
+
+        if ($escort->profile_image == NULL) {
+            $profile_image = Image::where('escort_id' , $escort->id)->where('user_id' , $escort->user_id)->first(['image_1']);
+            $data['profile_image'] = $profile_image->image_1;
+        }else{
+            $data['profile_image'] = $escort->profile_image;
+        }
 
         $hasVideo = false;
 
@@ -247,6 +255,7 @@ class EscortRepository
         $data['user'] = $user;
         $data['escort'] = $escort;
         $data['video'] = $hasVideo;
+        
 
         return $data;
       }

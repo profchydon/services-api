@@ -32,7 +32,7 @@ class SendActivationMail extends Mailable
      */
     public function build()
     {
-        return $this->from('no-reply@xcort.ng', 'Xcort.ng')
+        return $this->from('hello@54gene.com', 'Xcort.ng')
         ->subject('Your account activation code')
         ->view('mail.html.activate')
         ->with(['code' => $this->code , 'email' => $this->email]);

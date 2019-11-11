@@ -99,18 +99,45 @@ class AdminRepository
               return $verification;
           }else {
 
-              Escort::whereId($escort_id)->update([
-                'verified' => 1,
-                'verification_ongoing' => 0
-              ]);
+              // Escort::whereId($escort_id)->update([
+              //   'verified' => 1,
+              //   'verification_ongoing' => 0
+              // ]);
+
+              $user = User::whereId($verification->user_id)->first(['name' , 'email']);
 
               $verification->delete();
 
-              return $verification;
+              $data['status'] = "passed";
+              $data['email'] = $user->user->email;
+              $data['name'] = $user->user->name;
+
+              return $data;
           }
 
     }
 
+    public function verifyEscortFail($verification_id, $escort_id)
+    {
+          $verification = Verification::whereId($verification_id)->where('escort_id' , $escort_id)->first();
+
+          if ($verification == NULL) {
+              return $verification;
+          }else {
+
+              Escort::whereId($escort_id)->update([
+                'verified' => 0,
+                'verification_ongoing' => 0
+              ]);
+
+              $user = User::whereId($verification->user_id)->first(['name' , 'email']);
+
+              $verification->delete();
+
+              return $user;
+          }
+
+    }
 
 }
 

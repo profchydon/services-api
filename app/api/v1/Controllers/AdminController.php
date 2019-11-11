@@ -8,6 +8,8 @@ use App\Api\V1\Repositories\AdminRepository;
 use App\Api\V1\Repositories\VerificationRepository;
 use App\Api\V1\Repositories\TransactionRepository;
 use App\Api\V1\Repositories\FeatureRepository;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendVerificationSuccessMail;
 use Carbon\Carbon;
 
 class AdminController extends Controller
@@ -198,6 +200,10 @@ class AdminController extends Controller
         try {
 
             $verifyEscort = $this->admin->verifyEscortTrue($request->verification_id, $request->escort_id);
+
+            // return $verifyEscort;
+
+            // Mail::to($verifyEscort->email)->send(new SendVerificationSuccessMail($verifyEscort->user->name));
 
             // Create a custom array as response
             $response = [
